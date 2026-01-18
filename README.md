@@ -10,4 +10,8 @@ This also includes custom app image icons
 - zurg
 - ssh
 
-and avatars.
+and avatars
+
+...
+
+and wallpapers.
