@@ -1,0 +1,67 @@
+zurg: v1
+# ⚠️ REQUIRED: Replace 'yourtoken' with your Real-Debrid API token
+# Get your token from: https://real-debrid.com/apitoken
+token: yourtoken
+
+# Optional: Network settings
+# host: "[::]"  # Listen on all interfaces
+# port: 9999    # WebDAV port (default: 9999)
+# username:     # Basic auth username (optional)
+# password:     # Basic auth password (optional)
+
+# Optional: Performance settings
+# concurrent_workers: 20    # Number of concurrent workers
+check_for_changes_every_secs: 10  # How often to check for library changes
+
+# Optional: Repair settings
+# repair_every_mins: 60     # How often to repair the library
+# ignore_renames: false     # Ignore file renames
+# retain_rd_torrent_name: false     # Keep Real-Debrid torrent names
+# retain_folder_name_extension: false
+enable_repair: true         # Enable automatic repair
+auto_delete_rar_torrents: true     # Auto-delete RAR torrents
+
+# Optional: API settings
+# api_timeout_secs: 15
+# download_timeout_secs: 10
+# rate_limit_sleep_secs: 6
+# retries_until_failed: 2
+
+# Optional: Network settings
+# network_buffer_size: 4194304  # 4MB
+# serve_from_rclone: false
+# verify_download_link: false
+# force_ipv6: false
+
+# Optional: Plex integration (for automatic library updates)
+# Uncomment the line below to enable Plex updates
+# on_library_update: sh plex_update.sh "$@"
+
+# Directory structure configuration
+# This defines how your media will be organized
+directories:
+  # Anime directory - filters for anime content
+  anime:
+    group_order: 10
+    group: media
+    filters:
+      - regex: /\b[a-fA-F0-9]{8}\b/
+      - any_file_inside_regex: /\b[a-fA-F0-9]{8}\b/
+
+  # TV Shows directory - filters for episodic content
+  shows:
+    group_order: 20
+    group: media
+    filters:
+      - has_episodes: true
+
+  # Movies directory - filters for movie content
+  movies:
+    group_order: 30
+    group: media
+    only_show_the_biggest_file: true
+    filters:
+      - regex: /.*/
+
+# For advanced configuration options, see:
+# https://github.com/debridmediamanager/zurg-testing/wiki/Config
