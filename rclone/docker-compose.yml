@@ -1,0 +1,112 @@
+name: rclone
+
+services:
+  rclone:
+    image: rclone/rclone:latest
+    container_name: rclone
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - target: 5572
+        published: "5572"
+        protocol: tcp
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - type: bind
+        source: /DATA/AppData/$AppID/config
+        target: /config/rclone
+      - type: bind
+        source: /DATA/Media
+        target: /data
+    command:
+      - rcd
+      - --rc-web-gui
+      - --rc-addr
+      - :5572
+      - --rc-no-auth
+      - --rc-web-gui-no-open-browser
+      - --config
+      - /config/rclone/rclone.conf
+    devices: []
+    cap_add: []
+    labels:
+      icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Rclone/icon.png
+    x-casaos:
+      envs:
+        - container: PUID
+          description:
+            en_us: Run rclone as specified user ID. Defaults to 1000.
+        - container: PGID
+          description:
+            en_us: Run rclone as specified group ID. Defaults to 1000.
+        - container: TZ
+          description:
+            en_us: Specify a timezone to use. Uses system timezone by default.
+      ports:
+        - container: "5572"
+          description:
+            en_us: WebUI HTTP Port
+            
+      volumes:
+        - container: /config/rclone
+          description:
+            en_us: Rclone configuration directory.
+        - container: /data
+          description:
+            en_us: Access to ZimaOS Media directory.
+            
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+    - arm
+  main: rclone
+  author: CasaOS Team
+  category: Cloud
+  description:
+    en_us: |
+      Rclone is a command-line program to manage files on cloud storage. It is a feature-rich alternative to cloud vendors' web storage interfaces and enables encryption for protecting files in the cloud.
+      
+      With the web GUI enabled, you can manage remote storage connections (Google Drive, Dropbox, OneDrive, S3, etc.), browse and transfer files between local and cloud storage, monitor active transfers in real-time, configure sync and copy operations, and mount cloud storage as a local filesystem.
+      
+      First-time setup: Access the web UI, click "Config" to add your cloud storage remotes, follow the wizard to authenticate with your cloud providers, and start transferring files!
+      
+      Note: This installation runs without authentication by default. To add authentication, you can modify the container settings to include --rc-user and --rc-pass flags.
+  developer: rclone.org
+  icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Rclone/icon.png
+  screenshot_link:
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Rclone/screenshot-1.png
+    - https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Rclone/screenshot-2.png
+  tagline:
+    en_us: Sync files to and from cloud storage with a powerful web interface
+  thumbnail: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Rclone/thumbnail.png
+  title:
+    en_us: Rclone
+  tips:
+    before_install:
+      en_us: |
+        Default Configuration:
+        - Web UI Port: 5572
+        - Authentication: Disabled by default
+        - User ID (PUID): 1000
+        - Group ID (PGID): 1000
+        - Timezone: Etc/UTC (change to your timezone if needed, e.g., America/New_York, Europe/London)
+        - Config Location: /DATA/AppData/$AppID/config
+        - Media Access: /DATA/Media mounted as /data
+        
+        Important Notes:
+        - Config directory is created automatically on first run
+        - Configure cloud remotes through the web UI
+        - You can change PUID/PGID if your user has different IDs
+        - Supports 40+ cloud providers: Google Drive, Dropbox, OneDrive, Amazon S3, Backblaze B2, and more
+        - For added security, enable authentication by modifying container command
+  index: /
+  port_map: "5572"
+  scheme: http
+  store_app_id: rclone
+  hostname: ""
+  author_url: https://rclone.org
+  project_url: https://github.com/rclone/rclone
