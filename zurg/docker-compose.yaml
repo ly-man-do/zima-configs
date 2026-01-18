@@ -61,12 +61,12 @@ x-casaos:
       **Important Setup Notes:**
       1. You MUST edit the config.yml file to add your Real-Debrid API token
       2. Get your token from: https://real-debrid.com/apitoken
-      3. Edit config file at: /DATA/AppData/zurg/config/config.yml
+      3. Edit config file at: /DATA/AppData/zurg/config.yml
       4. When using Zurg on a server outside your home network, ensure "Use my Remote Traffic automatically when needed" is unchecked on your Real-Debrid Account page
       
       **First Time Setup:**
       After installation, you need to configure Zurg:
-      1. Navigate to /DATA/AppData/zurg/config/
+      1. Navigate to /DATA/AppData/zurg/
       2. Edit config.yml and replace "yourtoken" with your Real-Debrid API token
       3. Configure your directory structure as needed
       4. Restart the Zurg container
@@ -101,7 +101,7 @@ x-casaos:
            - Copy your API token
         
         2. **Edit the config file:**
-           - Location: `/DATA/AppData/zurg/config/config.yml`
+           - Location: `/DATA/AppData/zurg/config.yml`
            - Replace `yourtoken` with your actual Real-Debrid API token
            - Customize directory structure if needed
         
