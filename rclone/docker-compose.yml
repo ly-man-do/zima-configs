@@ -16,11 +16,13 @@ services:
       - TZ=Etc/UTC
     volumes:
       - type: bind
-        source: /DATA/AppData/$AppID/config
+        source: /DATA/AppData/rclone/config
         target: /config/rclone
       - type: bind
         source: /DATA/Media
         target: /data
+        bind:
+          propagation: shared
     command:
       - rcd
       - --rc-web-gui
@@ -30,8 +32,12 @@ services:
       - --rc-web-gui-no-open-browser
       - --config
       - /config/rclone/rclone.conf
-    devices: []
-    cap_add: []
+    devices:
+      - /dev/fuse:/dev/fuse
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor:unconfined
     labels:
       icon: https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Rclone/icon.png
     x-casaos:
@@ -94,7 +100,7 @@ x-casaos:
         - User ID (PUID): 1000
         - Group ID (PGID): 1000
         - Timezone: Etc/UTC (change to your timezone if needed, e.g., America/New_York, Europe/London)
-        - Config Location: /DATA/AppData/$AppID/config
+        - Config Location: /DATA/AppData/rclone/config
         - Media Access: /DATA/Media mounted as /data
         
         Important Notes:
